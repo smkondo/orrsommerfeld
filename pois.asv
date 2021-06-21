@@ -46,8 +46,8 @@ A21=kz*(du*ones(1,length(u))).*D0(1:N,:); %cross-term
 A22=kx*(u*ones(1,length(u))).*D0-(D2-ak2*D0)/(1i*Re); %Squire equation
 B22=D0; %1
 
-A22=[er*D0(1,:); A22(2:N-1,:); er*D0(N,:)]; %Applying the same boundary condition on Matrix A
-A21=[zeros(1,N); A21(2:N-1,:); zeros(1,N)]; %Zero boundary condition at the wall
+A22=[er*D0(1,:); A22(2:N-1,:); er*D0(N,:)];
+A21=[zeros(1,N); A21(2:N-1,:); zeros(1,N)];
 % combine all the blocks
 A=[A11 zeros(N,N); A21 A22];
 B=[B11 zeros(N,N); zeros(N,N) B22];

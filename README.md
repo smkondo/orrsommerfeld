@@ -1,4 +1,7 @@
-# Spectral and Pseudospectral Analysis of the Orr-Sommerfeld equation
-This repo contains the MATLAB files for the perturbation analysis of the Orr-Sommerfeld equation and is adapted from the MATLAB code found in "Appendix A.6: MATLAB codes for hydrodynamic stability" in "Stability and Transition in Shear Flows" by Peter J. Schmid and Dan S. Henningson (2001).
+# Eigenvalue Decomposition of the Orr-Sommerfeld operator
+This repo contains the MATLAB files for the eigenvalue analysis of the Orr-Sommerfeld matrix and is adapted from the MATLAB code found in "Appendix A.6: MATLAB codes for hydrodynamic stability" in "Stability and Transition in Shear Flows" by Peter J. Schmid and Dan S. Henningson (2001).
 
-The Orr-Sommerfeld equation describes the normal velocity of a plane Poiseuille flow and is derived form the linear Navier-Stokes equation. In this matlab code, the streamwise wave number is set to 1 and the spanwise wave number is set to 0. If desired the Reynolds number, wave numbers and the number of modes extracted can be changed by altering the variables specificed in the beginning of the test.m file.
+The Orr-Sommerfeld matrix describes the normal velocity and vorticity fluctutions in a plane Poiseuille flow and is derived form the linearized Navier-Stokes equation. In this problem, we investigate the Orr-Sommerfeld matrix with streamwise wavenumber (kx) = spanwise wavenumber (kz) = 1 and Re = 5,000. The test.m file will derive the Orr-Sommerfeld matrix and plot the eigenspectrum and eigenfunction of the problem.
+
+While this analysis produces the correct eigenspectrum, the eigenfunctions produced from this script does not accurately protray what is presented in the textbook in Fig. 3.2 (refer to eigenfunction file for image). 
+

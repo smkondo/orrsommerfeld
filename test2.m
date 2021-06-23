@@ -1,4 +1,4 @@
-%{ 
+
 % test2.m
 
 %Chebyshev
@@ -20,19 +20,18 @@ A.op = @(x,u,eta)([kx*uX(x).*(diff(u,2)-ak2*u)-kx*uXpp(x).*u-1/Re/1i...
     *(diff(u,4)-2*ak2*diff(u,2)+ak2^2*u); kz*uXp(x)*u + kx*uX(x)*eta-1/Re/1i*(diff(eta,2)-ak2*eta)]); 
        
 B = chebop(dom); %Define the a chebop structure's domain
-% B.op = @(x,u) diff(u,2)-kx^2*u;  %Define the LHS of the OS equation
-B.op = @(x,u,eta) ([diff(u,2)-kx^2*u ; eta]);
+% B.op = @(x,u) diff(u,2)-ak2*u;  %Define the LHS of the OS equation
+B.op = @(x,u,eta) ([diff(u,2)-ak2*u ; eta]);
 
 
 % A.lbc = @(u) [diff(u),u]; %Implement the boundary conditions A
 % A.rbc = @(u) [diff(u),u];
-% A.lbc = [0,0,0];
-% A.rbc = [0,0,0];
-A.lbc = @(u,eta) [u,diff(u),eta]; %Implement the boundary conditions A
-A.rbc = @(u,eta) [u,diff(u),eta];
+% A.lbc = 0;
+% A.rbc = 0;
+A.lbc = @(u,eta) [diff(u),u,eta]; %Implement the boundary conditions A
+A.rbc = @(u,eta) [diff(u),u,eta];
 
-[v, e] = eigs(A,B,98);
-%}
+[v, e] = eigs(A,B,98,'SM');
 
 % Cr = diag(real(e));
 % Ci = diag(imag(e));
@@ -41,13 +40,16 @@ A.rbc = @(u,eta) [u,diff(u),eta];
 % % ylim([-1 0.1]);
 % % xlim([0 1]);
 
-
 normalv = chebfun(v(1,:));
 normaleta = chebfun(v(2,:));
 
 Av = normalv(:,3); An = normaleta(:,3);
-Sv = normalv(:,74); Sn = normaleta(:,74);
-Pv = normalv(:,97); Pn = normaleta(:,97);
+Sv = normalv(:,69); Sn = normaleta(:,69);
+Pv = normalv(:,84); Pn = normaleta(:,84);
+
+% test = abs(normalv(1,:));
+% figure(1)
+% plot(test,'o')
 
 % data = importdata('spectrum.csv');  
 % sCr = data(:,1); sCi = data(:,2);
@@ -72,7 +74,7 @@ Pny = data6(:,1); Pnn = data6(:,2);
 
 
 figure(2)
-plot(abs(Av)/9.681,'-k')
+plot(abs(Av)/15.401,'-k')
 hold on
 plot(Avy, Avv,'or')
 hold off
@@ -91,16 +93,18 @@ xlabel('y')
 ylabel('\eta')
 
 figure(4)
-plot(abs(Sv)/0.02748,'-k')
+plot(abs(Sv)/0.087456,'-k')
+% plot(abs(Sv),'-k')
 hold on
 plot(Svy, Svv ,'or')
 hold off
 title('Eigenfunction at Branch S (v)')
+% xlim([-1.1,1])
 xlabel('y')
 ylabel('v [10^4]')
 
 figure(5)
-plot(abs(Sn),'-k')
+plot(abs(Sn)/0.87135,'-k')
 hold on
 plot(Sny, Snn ,'or')
 hold off
@@ -109,7 +113,7 @@ xlabel('y')
 ylabel('\eta [10^3]')
 
 figure(6)
-plot(abs(Pv)/0.14706,'-k')
+plot(abs(Pv)/0.006279,'-k')
 hold on
 plot(Pvy, Pvv ,'or')
 hold off
@@ -118,7 +122,7 @@ xlabel('y')
 ylabel('v [10^3]')
 
 figure(7)
-plot(abs(Pn)/0.281,'-k')
+plot(abs(Pn)/0.18158,'-k')
 hold on
 plot(Pny, Pnn ,'or')
 hold off

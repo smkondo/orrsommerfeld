@@ -31,7 +31,7 @@ B.op = @(x,u,eta) ([diff(u,2)-kx^2*u ; eta]);
 A.lbc = @(u,eta) [u,diff(u),eta]; %Implement the boundary conditions A
 A.rbc = @(u,eta) [u,diff(u),eta];
 
-[v, e] = eigs(A,B,98);
+[v, e] = eigs(A,B);
 
 % Cr = diag(real(e));
 % Ci = diag(imag(e));
@@ -44,9 +44,9 @@ A.rbc = @(u,eta) [u,diff(u),eta];
 normalv = chebfun(v(1,:));
 normaleta = chebfun(v(2,:));
 
-Av = normalv(:,4); An = normaleta(:,4);
-Sv = normalv(:,74); Sn = normaleta(:,74);
-Pv = normalv(:,98); Pn = normaleta(:,98);
+Av = normalv(:,2); An = normaleta(:,2);
+Sv = normalv(:,72); Sn = normaleta(:,72);
+Pv = normalv(:,94); Pn = normaleta(:,94);
 
 % data = importdata('spectrum.csv');  
 % sCr = data(:,1); sCi = data(:,2);
@@ -89,39 +89,39 @@ title('Eigenfunction at Branch A (\eta)')
 xlabel('y')
 ylabel('\eta')
 
-figure(4)
-plot(abs(Sv)/0.02748,'-k')
-hold on
-plot(Svy, Svv ,'or')
-hold off
-title('Eigenfunction at Branch S (v)')
-xlabel('y')
-ylabel('v [10^4]')
-
-figure(5)
-plot(abs(Sn),'-k')
-hold on
-plot(Sny, Snn ,'or')
-hold off
-title('Eigenfunction at Branch S (\eta)')
-xlabel('y')
-ylabel('\eta [10^3]')
-
-figure(6)
-plot(abs(Pv)/0.14706,'-k')
-hold on
-plot(Pvy, Pvv ,'or')
-hold off
-title('Eigenfunction at Branch P (v)')
-xlabel('y')
-ylabel('v [10^3]')
-
-figure(7)
-plot(abs(Pn)/0.281,'-k')
-hold on
-plot(Pny, Pnn ,'or')
-hold off
-title('Eigenfunction at Branch P (\eta)')
-xlabel('y')
-ylabel('\eta [10^2]')
+% figure(4)
+% plot(abs(Sv)/0.02748,'-k')
+% hold on
+% plot(Svy, Svv ,'or')
+% hold off
+% title('Eigenfunction at Branch S (v)')
+% xlabel('y')
+% ylabel('v [10^4]')
+% 
+% figure(5)
+% plot(abs(Sn),'-k')
+% hold on
+% plot(Sny, Snn ,'or')
+% hold off
+% title('Eigenfunction at Branch S (\eta)')
+% xlabel('y')
+% ylabel('\eta [10^3]')
+% 
+% figure(6)
+% plot(abs(Pv)/0.14706,'-k')
+% hold on
+% plot(Pvy, Pvv ,'or')
+% hold off
+% title('Eigenfunction at Branch P (v)')
+% xlabel('y')
+% ylabel('v [10^3]')
+% 
+% figure(7)
+% plot(abs(Pn)/0.281,'-k')
+% hold on
+% plot(Pny, Pnn ,'or')
+% hold off
+% title('Eigenfunction at Branch P (\eta)')
+% xlabel('y')
+% ylabel('\eta [10^2]')
 

@@ -8,16 +8,16 @@ kx = 1; kz = 1; Re = 5000; n = 98;
 ak2=kx^2+kz^2;
 
 dom = [-1 1]; %Define the Domain
-uX = chebfun('1-x.^2',n);
-% uX = chebfun('1-x.^2');
+% uX = chebfun('1-x.^2',n);
+uX = chebfun('1-x.^2');
 uXp = diff(uX, 1); %Define the first derivative of U
 uXpp = diff(uX,2); %Define second derivative of U
 
 
 A = chebop(dom); %Define the a chebop structure's domain
 %Define the LHS of the OS equation
-A.op = @(x,u,eta)([1i*kx*uX(x).*(diff(u,2)-ak2*u)-1i*kx*uXpp(x).*u-1/Re...
-    *(diff(u,4)-2*ak2*diff(u,2)+ak2^2*u); 1i*kz*uXp(x)*u + 1i*kx*uX(x)*eta-1/Re*(diff(eta,2)-ak2*eta)]); 
+A.op = @(x,u,eta)([kx*uX(x).*(diff(u,2)-ak2*u)-kx*uXpp(x).*u-1/Re/1i...
+    *(diff(u,4)-2*ak2*diff(u,2)+ak2^2*u); kz*uXp(x)*u + kx*uX(x)*eta-1/Re/1i*(diff(eta,2)-ak2*eta)]); 
        
 B = chebop(dom); %Define the a chebop structure's domain
 % B.op = @(x,u) diff(u,2)-kx^2*u;  %Define the LHS of the OS equation
@@ -33,12 +33,13 @@ A.rbc = @(u,eta) [u,diff(u),eta];
 
 [v, e] = eigs(A,B,98);
 
-% Cr = diag(real(e));
-% Ci = diag(imag(e));
-% figure(1)
-% plot(Ci,Cr,'o')
-% % ylim([-1 0.1]);
-% % xlim([0 1]);
+
+Cr = diag(real(e));
+Ci = diag(imag(e));
+figure(1)
+plot(Cr,Ci,'o')
+% ylim([-1 0.1]);
+% xlim([0 1]);
 
 
 normalv = chebfun(v(1,:));

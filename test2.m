@@ -1,4 +1,4 @@
-
+%{ 
 % test2.m
 
 %Chebyshev
@@ -32,22 +32,22 @@ A.lbc = @(u,eta) [u,diff(u),eta]; %Implement the boundary conditions A
 A.rbc = @(u,eta) [u,diff(u),eta];
 
 [v, e] = eigs(A,B,98);
+%}
 
-
-Cr = diag(real(e));
-Ci = diag(imag(e));
-figure(1)
-plot(Cr,Ci,'o')
-% ylim([-1 0.1]);
-% xlim([0 1]);
+% Cr = diag(real(e));
+% Ci = diag(imag(e));
+% figure(1)
+% plot(Cr,Ci,'o')
+% % ylim([-1 0.1]);
+% % xlim([0 1]);
 
 
 normalv = chebfun(v(1,:));
 normaleta = chebfun(v(2,:));
 
-Av = normalv(:,4); An = normaleta(:,4);
+Av = normalv(:,3); An = normaleta(:,3);
 Sv = normalv(:,74); Sn = normaleta(:,74);
-Pv = normalv(:,98); Pn = normaleta(:,98);
+Pv = normalv(:,97); Pn = normaleta(:,97);
 
 % data = importdata('spectrum.csv');  
 % sCr = data(:,1); sCi = data(:,2);

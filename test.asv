@@ -55,18 +55,27 @@ title('Eigenspectrum of Orr-Sommerfeld Problem', 'FontSize', 18)
 xn = nlize(x,M);
 
 % A-branch
-xtest = xn(1:101,25);
+xtest = xn(102:202,3);
 vec=(0:ny)';
 yj = cos(pi*vec/ny);
 xeigfun = abs(cheb_expansion_soln(yj,xtest));
 
-data5 = importdata('Pv.csv');
-Pvy = data5(:,1); Pvv = data5(:,2);
+data2 = importdata('An.csv');
+Any = data2(:,1); Ann = data2(:,2);
+
+% figure(3)
+% plot(abs(An)/16.016,'-k')
+% hold on
+% plot(Any, Ann,'or')
+% hold off
+% title('Eigenfunction at Branch A (\eta)')
+% xlabel('y')
+% ylabel('\eta')
 
 figure(2)
-plot(yj,xeigfun/0.0021399,'-g')
+plot(yj,xeigfun,'-g')
 hold on
-plot(Pvy, Pvv,'or')
+plot(Any, Ann,'or')
 hold off
 title('Eigenfunction at Branch A (v)')
 xlabel('y')

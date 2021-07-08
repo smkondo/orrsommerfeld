@@ -5,8 +5,8 @@ Re = 2000;
 
 [D0,D1,D2,D4]=Dmat(n);
 
-samp = 100;
-samp2 = 50;
+samp = 50;
+samp2 = 30;
 alpha = linspace(10^-4,1,samp);
 beta = linspace(10^-2,10,samp);
 
@@ -19,9 +19,9 @@ for k=1:samp
         
         [A,B]=pois(n,kx,kz,Re,D0,D1,D2,D4);
         
-        omegas = linspace(-2,0,samp2);
-        svals = zeros(samp2,1);
-        for i = 1:samp2
+        omegas = linspace(-2,0,samp);
+        svals = zeros(samp,1);
+        for i = 1:samp
            
             om = omegas(i);
             H = inv(B\A-om*eye(2*n+2));
@@ -42,10 +42,6 @@ contourf(X,Z,log10(sigmav))
 colorbar()
 set(gca,'xscale','log')
 set(gca,'yscale','log')
-xlabel('k_x')
-ylabel('k_z')
-title('log_{10}(||H||_2)') 
-colormap(turbo)
 
 % %% Plot
 % set(0,'DefaultTextInterpreter', 'latex');

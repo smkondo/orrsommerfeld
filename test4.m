@@ -2,53 +2,45 @@
 %conducting resolvent analysis on the Orr-Sommerfeld operator
 n= 100; %number of OS modes
 ny = 1000; %number of Chebyshev discretization points
-Re = 2000; %Reynolds Number
+Res = [4000,2000,1000,500];
+% Re = 2000; %Reynolds Number
 kx = 1; %input alpha value
 kz = 1; %input for beta value
 % om = 0.2; 
 
 % generate Chebyshev differentiation matrices
 [D0,D1,D2,D4]=Dmat(n);
-
-% set up Orr-Sommerfeld matrices A and B
-[A,B]=pois(n,kx,kz,Re,D0,D1,D2,D4);
-
-% generate energy weight matrix
+sig1 = zeros(samp,1);
 ak2=kx^2+kz^2;
 M=energy(n+1,n+1,ak2);
 
-% sig1 = zeros(1,2/0.1+1);
-% sig2 = zeros(1,2/0.1+1);
-samp = 50;
-omegas = linspace(-2,0,samp);
+samp = 100;
+omegas = linspace(0,1.2,samp);
+for i = 1:4
+    Re = Res(i);
 
-sig1 = [];
-% sig2 = [];
-for j=1:samp
-    om = omegas(j);
-%     count = 1;
-    H = inv(1i*om*eye(2*n+2)+B\A);
-%     Hnorm = norm(H);
-    [~,s,~] = svds(H,1,'largest');
-    sig1 = [sig1 s];
-%     sig1(count) = s(1,1);
-%     sig2(count) = s(2,2);
-%     count = count+1;
+    % set up Orr-Sommerfeld matrices A and B
+    [A,B]=pois(n,kx,kz,Re,D0,D1,D2,D4);
+
+    for j=1:samp
+        om = omegas(j);
+        H = inv(B\A-om*eye(2*n+2));
+        [~,s,~] = svds(H,1,'largest');
+        sig1(j,i)=s;
+    end
 end
 
-% x = 0:0.01:2;
-semilogy(omegas,real(sig1),'ko')
-% hold on
-% plot(x,sig2,'bo')
-% hold off
-
-% % compute the resolvent operator of the Orr-Sommerfeld matrix
-% H = inv(-1i*om*eye(2*n+2)+B\A);
-% 
-% [u,s,v] = svds(H,2);
-% 
-% sing = real(diag(s));
-% 
-% plot(sing,'o')
+% data = importdata('Rvalue.csv');
+% som = data(:,1); sR = data(:,2)/0.1326196199;
+semilogy(omegas,real(sig1(:,1)),'-k')
+hold on
+semilogy(omegas,real(sig1(:,2)),'--k')
+semilogy(omegas,real(sig1(:,3)),'-.k')
+semilogy(omegas,real(sig1(:,4)),':k')
+hold off
+ylabel('\sigma_i');
+xlabel('\omega');
+legend('Re=4000','Re=2000','Re=1000','Re=500','location','northwest')
+title('Resolvent norm vs. Frequency')
 
 

@@ -1,4 +1,3 @@
-%{
 % test.m
 %
 % Program to compute the Orr-Sommerfeld matrix for three
@@ -50,7 +49,7 @@ xlim([0 1]);
 xlabel('Cr', 'FontSize', 18)
 ylabel('Ci','FontSize', 18)
 title('Eigenspectrum of Orr-Sommerfeld Problem', 'FontSize', 18)
-%}
+
 % plot the eigenfunction 
 xn = nlize(x,M);
 
